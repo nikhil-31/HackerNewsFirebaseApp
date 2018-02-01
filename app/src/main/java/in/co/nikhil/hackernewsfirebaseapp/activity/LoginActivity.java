@@ -1,5 +1,6 @@
 package in.co.nikhil.hackernewsfirebaseapp.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_login);
     ButterKnife.bind(this);
 
     // Get the firebase instance
@@ -71,7 +72,8 @@ public class LoginActivity extends AppCompatActivity {
 
   // Onclick method for Sign Up button
   public void signUp(View view) {
-
+    Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+    startActivity(intent);
   }
 
 
