@@ -13,4 +13,6 @@
   <string name="all_fields_required">All Fields Are Required</string>
   <string name="user_exists">User Account Exists, Please Select another account</string>
   <string name="please_select_strong_password">Please Select a Stronger Password</string>
+  <string name="invalid_user">Either the username or the password is invalid</string>
+  <string name="please_sign_up">Please Sign Up to use Hacker News</string>
 </resources>

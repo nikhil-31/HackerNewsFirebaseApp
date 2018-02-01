@@ -76,6 +76,7 @@
     android:layout_gravity="center"
     android:layout_margin="5dp"
     android:background="@color/white"
+    android:onClick="checkLogin"
     android:foreground="?attr/selectableItemBackground"
     android:text="@string/login"
     android:textAllCaps="true"
