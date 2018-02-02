@@ -19,6 +19,8 @@ public class HackerStory extends RealmObject {
   private String mComments;
   private String mScore;
   private String mUrl;
+  private String mOmg;
+  private String mCommentsJson;
 
 
   public long getId() {
@@ -80,5 +82,13 @@ public class HackerStory extends RealmObject {
 
   public void setUrl(String mUrl) {
     this.mUrl = mUrl;
+  }
+
+  public String getCommentsJson() {
+    return mCommentsJson;
+  }
+
+  public void setCommentsJson(String mCommentsJson) {
+    this.mCommentsJson = mCommentsJson;
   }
 }

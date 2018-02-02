@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -143,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
     mRequestQueue.add(request);
   }
 
+  @Override
+  public void onBackPressed() {
+    super.onBackPressed();
+    finish();
+  }
+
   private void sendRetrieveStoryDetailsRequest(String url) {
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET
         , url
@@ -151,6 +158,12 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
       @Override
       public void onResponse(JSONObject response) {
         Story story = mGson.fromJson(response.toString(), Story.class);
+        String kidsString = "";
+        try {
+          kidsString = response.getString("kids");
+        } catch (JSONException e) {
+          e.printStackTrace();
+        }
 
         mRealm.beginTransaction();
         HackerStory hackerStory = mRealm.createObject(HackerStory.class, story.getId());
@@ -159,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
         hackerStory.setUrl(story.getUrl());
         hackerStory.setDatetime(story.getTime().toString());
         hackerStory.setSubmitter(story.getBy());
+        hackerStory.setCommentsJson(kidsString);
         List<Integer> kids = story.getKids();
         String commentsSize = String.valueOf(kids.size());
         hackerStory.setComments(commentsSize);
@@ -190,7 +204,6 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
   private void logout() {
     mFirebaseAuth.signOut();
   }
-
 
   @Override
   public void itemClicked(HackerStory story) {

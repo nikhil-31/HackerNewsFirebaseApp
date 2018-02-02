@@ -76,10 +76,8 @@ public class ArticleWebFragment extends Fragment {
     if (hackerStory != null) {
       mWebView.setWebViewClient(new CustomWebViewClient());
       WebSettings webSetting = mWebView.getSettings();
-      webSetting.setJavaScriptEnabled(true);
       webSetting.setDisplayZoomControls(true);
       mWebView.loadUrl(hackerStory.getUrl());
-
     }
     return rootView;
   }

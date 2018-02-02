@@ -7,6 +7,7 @@ import in.co.nikhil.hackernewsfirebaseapp.activity.DetailActivity;
 import in.co.nikhil.hackernewsfirebaseapp.activity.MainActivity;
 import in.co.nikhil.hackernewsfirebaseapp.di.module.ApplicationModule;
 import in.co.nikhil.hackernewsfirebaseapp.fragments.ArticleWebFragment;
+import in.co.nikhil.hackernewsfirebaseapp.fragments.CommentsFragment;
 
 /**
  * Created by nik on 2/2/2018.
@@ -20,5 +21,8 @@ public interface ApplicationComponent {
   void inject(DetailActivity target);
 
   void inject(ArticleWebFragment target);
+
+  void inject(CommentsFragment target);
+
 
 }
