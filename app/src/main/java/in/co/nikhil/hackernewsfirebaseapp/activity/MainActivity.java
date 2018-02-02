@@ -60,12 +60,13 @@ public class MainActivity extends AppCompatActivity {
     GsonBuilder gsonBuilder = new GsonBuilder();
     mGson = gsonBuilder.create();
 
+    // Realm Init
     mRealm = Realm.getInstance(getRealmConfiguration());
     RealmResults<HackerStory> hackerStories = mRealm
         .where(HackerStory.class)
         .findAll();
 
-
+    // Realm recycler view adapter
     StoryRealmAdapter storyRealmAdapter = new StoryRealmAdapter(this
         , hackerStories
         , true
@@ -84,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
     }
     return mRealmConfiguration;
   }
-
 
   private void sendTopStoriesRequest(String url) {
 
@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
-//        Toast.makeText(MainActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     });
     mRequestQueue.add(request);
@@ -129,10 +128,7 @@ public class MainActivity extends AppCompatActivity {
         , new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
-        Log.v(TAG, "Response" + response.toString());
-
         Story story = mGson.fromJson(response.toString(), Story.class);
-        Log.v(TAG, "Story id - " + story.getId());
 
         mRealm.beginTransaction();
         HackerStory hackerStory = mRealm.createObject(HackerStory.class, story.getId());
@@ -149,7 +145,6 @@ public class MainActivity extends AppCompatActivity {
     }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
-//        Toast.makeText(MainActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
       }
     });
     mRequestQueue.add(request);

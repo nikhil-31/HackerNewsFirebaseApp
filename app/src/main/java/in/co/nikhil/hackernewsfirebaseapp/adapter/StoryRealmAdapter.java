@@ -5,6 +5,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.co.nikhil.hackernewsfirebaseapp.R;
@@ -36,10 +41,28 @@ public class StoryRealmAdapter extends RealmBasedRecyclerViewAdapter<HackerStory
     viewHolder.mTitle.setText(story.getArticleTitle());
     viewHolder.mUrl.setText(story.getUrl());
     viewHolder.mComments.setText(story.getComments());
-    String timeUser = story.getDatetime() + story.getSubmitter();
-    viewHolder.mStoryUserTime.setText(timeUser);
+
+    long timeMillis = System.currentTimeMillis()/1000 - Long.parseLong(story.getDatetime());
+
+    long seconds = timeMillis / 1000;
+    long minutes = seconds / 60;
+    long hours = minutes / 60;
+    long days = hours / 24;
+
+    if (hours == 0) {
+      String minutesString = minutes % 60 + "M " + seconds % 60 + "S . " + story.getSubmitter();
+      viewHolder.mStoryUserTime.setText(minutesString);
+    }
+    if (days == 0) {
+      String hoursMinutes = hours % 24 + "H " + minutes % 60 + "M " + seconds % 60 + "S . " + story.getSubmitter();
+      viewHolder.mStoryUserTime.setText(hoursMinutes);
+    } else {
+      String time = days + "D " + hours % 24 + "H " + minutes % 60 + "M " + seconds % 60 + "S . " + story.getSubmitter();
+      viewHolder.mStoryUserTime.setText(time);
+    }
 
   }
+
 
   public class MyViewHolder extends RealmViewHolder {
 
