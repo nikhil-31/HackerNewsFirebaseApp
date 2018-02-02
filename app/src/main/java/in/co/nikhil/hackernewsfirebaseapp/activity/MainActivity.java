@@ -2,7 +2,6 @@ package in.co.nikhil.hackernewsfirebaseapp.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -35,7 +34,7 @@ import io.realm.Realm;
 import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StoryRealmAdapter.itemClick {
   private static final String TAG = "MainActivity";
 
   @Inject
@@ -71,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         , hackerStories
         , true
         , true);
+    storyRealmAdapter.setItemClick(this);
     mRealmRecyclerView.setAdapter(storyRealmAdapter);
 
     sendTopStoriesRequest(URLs.TOP_STORIES);
@@ -151,4 +151,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
 
+  @Override
+  public void itemClicked(HackerStory story) {
+    Toast.makeText(this, "Story id " + story.getId(), Toast.LENGTH_SHORT).show();
+  }
 }
