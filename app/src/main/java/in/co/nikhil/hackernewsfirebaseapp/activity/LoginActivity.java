@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -30,8 +31,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.co.nikhil.hackernewsfirebaseapp.R;
 
-public class StoryActivity extends AppCompatActivity {
-  private static final String TAG = "StoryActivity";
+public class LoginActivity extends AppCompatActivity {
+  private static final String TAG = "LoginActivity";
 
   private static final int RC_SIGN_IN = 1;
 
@@ -50,11 +51,11 @@ public class StoryActivity extends AppCompatActivity {
   // Google Login
   private GoogleSignInClient mGoogleSignInClient;
 
-//  @Override
-//  protected void onStart() {
-//    super.onStart();
-//    mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-//  }
+  @Override
+  protected void onStart() {
+    super.onStart();
+    mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -63,45 +64,42 @@ public class StoryActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     // Get the firebase instance
-//    mFirebaseAuth = FirebaseAuth.getInstance();
-//
-//    // Sets the google sign in button to wide size
-//    mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
-//
-//    // Initialize Progress Dialog
-//    mProgress = new ProgressDialog(this);
+    mFirebaseAuth = FirebaseAuth.getInstance();
+
+    // Sets the google sign in button to wide size
+    mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
+
+    // Initialize Progress Dialog
+    mProgress = new ProgressDialog(this);
 
     // TODO - Uncomment this code afterwards
     // Firebase Authentication Variables
-//    mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-//      @Override
-//      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//        FirebaseUser user = firebaseAuth.getCurrentUser();
-//        if (user != null) {
-//          Intent mainIntent = new Intent(StoryActivity.this, MainActivity.class);
-//          mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//          startActivity(mainIntent);
-//        }
-//      }
-//    };
+    mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+      @Override
+      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+        FirebaseUser user = firebaseAuth.getCurrentUser();
+        if (user != null) {
+          Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+          mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+          startActivity(mainIntent);
+        }
+      }
+    };
 
-    Intent mainIntent = new Intent(StoryActivity.this, MainActivity.class);
-    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    startActivity(mainIntent);
 
-//    mGoogleSignInButton.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View v) {
-//        googleSignIn();
-//      }
-//    });
-//
-//    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-//        .requestIdToken(getString(R.string.default_web_client_id))
-//        .requestEmail()
-//        .build();
-//
-//    mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+    mGoogleSignInButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        googleSignIn();
+      }
+    });
+
+    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(getString(R.string.default_web_client_id))
+        .requestEmail()
+        .build();
+
+    mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
   }
 
@@ -170,9 +168,9 @@ public class StoryActivity extends AppCompatActivity {
                 try {
                   throw task.getException();
                 } catch (FirebaseAuthInvalidCredentialsException e) {
-                  Toast.makeText(StoryActivity.this, getString(R.string.invalid_user), Toast.LENGTH_SHORT).show();
+                  Toast.makeText(LoginActivity.this, getString(R.string.invalid_user), Toast.LENGTH_SHORT).show();
                 } catch (FirebaseAuthInvalidUserException e) {
-                  Toast.makeText(StoryActivity.this, getString(R.string.please_sign_up), Toast.LENGTH_SHORT).show();
+                  Toast.makeText(LoginActivity.this, getString(R.string.please_sign_up), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                   e.printStackTrace();
                 }
@@ -185,22 +183,22 @@ public class StoryActivity extends AppCompatActivity {
 
   // Onclick method for Sign Up button
   public void signUp(View view) {
-    Intent intent = new Intent(StoryActivity.this, SignUpActivity.class);
+    Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
     startActivity(intent);
   }
 
 
-//  @Override
-//  protected void onResume() {
-//    super.onResume();
-//    mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-//  }
-//
-//  @Override
-//  protected void onPause() {
-//    super.onPause();
-//    mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-//  }
+  @Override
+  protected void onResume() {
+    super.onResume();
+    mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+  }
+
+  @Override
+  protected void onPause() {
+    super.onPause();
+    mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+  }
 
 
 }

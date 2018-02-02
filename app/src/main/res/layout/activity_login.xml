@@ -6,7 +6,7 @@
   android:background="@color/material_orange"
   android:orientation="vertical"
   android:padding="16dp"
-  tools:context="in.co.nikhil.hackernewsfirebaseapp.activity.StoryActivity">
+  tools:context="in.co.nikhil.hackernewsfirebaseapp.activity.LoginActivity">
 
   <TextView
     android:layout_width="match_parent"
