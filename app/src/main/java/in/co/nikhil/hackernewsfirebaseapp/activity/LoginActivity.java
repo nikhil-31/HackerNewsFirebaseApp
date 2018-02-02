@@ -2,10 +2,10 @@ package in.co.nikhil.hackernewsfirebaseapp.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -51,11 +51,11 @@ public class LoginActivity extends AppCompatActivity {
   // Google Login
   private GoogleSignInClient mGoogleSignInClient;
 
-  @Override
-  protected void onStart() {
-    super.onStart();
-    mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-  }
+//  @Override
+//  protected void onStart() {
+//    super.onStart();
+//    mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+//  }
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -64,40 +64,45 @@ public class LoginActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     // Get the firebase instance
-    mFirebaseAuth = FirebaseAuth.getInstance();
+//    mFirebaseAuth = FirebaseAuth.getInstance();
+//
+//    // Sets the google sign in button to wide size
+//    mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
+//
+//    // Initialize Progress Dialog
+//    mProgress = new ProgressDialog(this);
 
-    // Sets the google sign in button to wide size
-    mGoogleSignInButton.setSize(SignInButton.SIZE_WIDE);
-
-    // Initialize Progress Dialog
-    mProgress = new ProgressDialog(this);
-
+    // TODO - Uncomment this code afterwards
     // Firebase Authentication Variables
-    mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-      @Override
-      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user != null) {
-          Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-          mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-          startActivity(mainIntent);
-        }
-      }
-    };
+//    mAuthStateListener = new FirebaseAuth.AuthStateListener() {
+//      @Override
+//      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//        FirebaseUser user = firebaseAuth.getCurrentUser();
+//        if (user != null) {
+//          Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+//          mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//          startActivity(mainIntent);
+//        }
+//      }
+//    };
 
-    mGoogleSignInButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        googleSignIn();
-      }
-    });
+    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+    mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    startActivity(mainIntent);
 
-    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-        .requestIdToken(getString(R.string.default_web_client_id))
-        .requestEmail()
-        .build();
-
-    mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+//    mGoogleSignInButton.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View v) {
+//        googleSignIn();
+//      }
+//    });
+//
+//    GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+//        .requestIdToken(getString(R.string.default_web_client_id))
+//        .requestEmail()
+//        .build();
+//
+//    mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
   }
 
@@ -186,17 +191,17 @@ public class LoginActivity extends AppCompatActivity {
   }
 
 
-  @Override
-  protected void onResume() {
-    super.onResume();
-    mFirebaseAuth.addAuthStateListener(mAuthStateListener);
-  }
-
-  @Override
-  protected void onPause() {
-    super.onPause();
-    mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
-  }
+//  @Override
+//  protected void onResume() {
+//    super.onResume();
+//    mFirebaseAuth.addAuthStateListener(mAuthStateListener);
+//  }
+//
+//  @Override
+//  protected void onPause() {
+//    super.onPause();
+//    mFirebaseAuth.removeAuthStateListener(mAuthStateListener);
+//  }
 
 
 }
