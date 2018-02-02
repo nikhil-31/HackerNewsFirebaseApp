@@ -3,6 +3,7 @@ package in.co.nikhil.hackernewsfirebaseapp.data.remoteModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class Story {
   private Integer id;
   @SerializedName("kids")
   @Expose
-  private List<Integer> kids = null;
+  private List<Integer> kids = new ArrayList<>();
   @SerializedName("score")
   @Expose
   private Integer score;

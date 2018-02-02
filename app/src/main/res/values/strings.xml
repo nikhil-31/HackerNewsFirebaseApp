@@ -15,4 +15,6 @@
   <string name="please_select_strong_password">Please Select a Stronger Password</string>
   <string name="invalid_user">Either the username or the password is invalid</string>
   <string name="please_sign_up">Please Sign Up to use Hacker News</string>
+  <string name="no_hacker_news">No Hacker News</string>
+  <string name="no_internet">No Internet Connection</string>
 </resources>

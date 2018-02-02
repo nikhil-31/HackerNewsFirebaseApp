@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/job_item_card"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:layout_marginBottom="2dp"
+  android:layout_marginTop="2dp"
+  app:cardElevation="2dp">
+
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <TextView
+      android:id="@+id/story_score"
+      android:layout_width="70dp"
+      android:layout_height="match_parent"
+      android:background="@color/light_orange"
+      android:gravity="center"
+      android:text="1"
+      android:textColor="@color/white"
+      android:textSize="25sp" />
+
+    <LinearLayout
+      android:layout_width="0dp"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:background="?attr/selectableItemBackground"
+      android:orientation="vertical"
+      android:paddingBottom="10dp"
+      android:paddingLeft="16dp"
+      android:paddingRight="16dp"
+      android:paddingTop="13dp">
+
+      <TextView
+        android:id="@+id/story_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:text="Introduction  To Html Components"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+      <TextView
+        android:id="@+id/story_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="www.w2c.org"
+        android:textSize="14sp" />
+
+      <TextView
+        android:id="@+id/story_time_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="12 mins ago . user01"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="14sp" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+      android:layout_width="60dp"
+      android:layout_height="match_parent">
+
+      <TextView
+        android:id="@+id/story_comments"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:drawableTop="@drawable/ic_action_chat_bubble"
+        android:text="50"
+        android:textAlignment="center"
+        android:textColor="@color/black" />
+
+
+    </RelativeLayout>
+  </LinearLayout>
+</android.support.v7.widget.CardView>

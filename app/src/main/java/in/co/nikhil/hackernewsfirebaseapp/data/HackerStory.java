@@ -10,7 +10,7 @@ import io.realm.annotations.PrimaryKey;
 public class HackerStory extends RealmObject {
 
   @PrimaryKey
-  private String mId;
+  private long mId;
 
   private String mArticleTitle;
   private String mSubmitter;
@@ -21,13 +21,10 @@ public class HackerStory extends RealmObject {
   private String mUrl;
 
 
-  public String getId() {
+  public long getId() {
     return mId;
   }
 
-  public void setId(String mId) {
-    this.mId = mId;
-  }
 
   public String getArticleTitle() {
     return mArticleTitle;
