@@ -30,6 +30,7 @@ public class DetailActivity extends AppCompatActivity {
   TabLayout mTabs;
 
   private long mStoryId;
+  private String mUser = "";
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +49,15 @@ public class DetailActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       getSupportActionBar().setTitle("");
     }
-    Toast.makeText(this, "Story id " + mStoryId, Toast.LENGTH_SHORT).show();
-
-
-    mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
     mTabs.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-    mTabs.setupWithViewPager(mViewPager);
+
+    if (mUser.equals("")) {
+      mViewPager.setAdapter(new MyCommentsAdapter(getSupportFragmentManager()));
+      mTabs.setupWithViewPager(mViewPager);
+    } else {
+      mViewPager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+      mTabs.setupWithViewPager(mViewPager);
+    }
   }
 
   @Override
@@ -97,5 +101,33 @@ public class DetailActivity extends AppCompatActivity {
       return 2;
     }
   }
+
+  private class MyCommentsAdapter extends FragmentStatePagerAdapter {
+    MyCommentsAdapter(FragmentManager fm) {
+      super(fm);
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+      Fragment fragment = null;
+      switch (position) {
+        case COMMENTS:
+          fragment = CommentsFragment.newInstance("", "");
+          break;
+      }
+      return fragment;
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+      return getResources().getStringArray(R.array.tabs)[position];
+    }
+
+    @Override
+    public int getCount() {
+      return 1;
+    }
+  }
+
 
 }
