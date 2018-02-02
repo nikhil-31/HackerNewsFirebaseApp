@@ -10,6 +10,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 /**
  * Created by nik on 2/2/2018.
@@ -35,4 +37,16 @@ public class ApplicationModule {
   public RequestQueue provideRequestQueue() {
     return Volley.newRequestQueue(application);
   }
+
+  @Provides
+  @Singleton
+  public Realm provideRealm() {
+        RealmConfiguration mRealmConfiguration = new RealmConfiguration
+        .Builder()
+        .deleteRealmIfMigrationNeeded()
+        .build();
+    return Realm.getInstance(mRealmConfiguration);
+  }
+
+
 }

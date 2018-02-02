@@ -46,8 +46,8 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
   @BindView(R.id.story_recycler_view)
   RealmRecyclerView mRealmRecyclerView;
 
+  @Inject
   Realm mRealm;
-  RealmConfiguration mRealmConfiguration;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +61,6 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
     mGson = gsonBuilder.create();
 
     // Realm Init
-    mRealm = Realm.getInstance(getRealmConfiguration());
     RealmResults<HackerStory> hackerStories = mRealm
         .where(HackerStory.class)
         .findAll();
@@ -77,43 +76,32 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
     sendTopStoriesRequest(URLs.TOP_STORIES);
   }
 
-  public RealmConfiguration getRealmConfiguration() {
-    if (mRealmConfiguration == null) {
-      mRealmConfiguration = new RealmConfiguration
-          .Builder()
-          .deleteRealmIfMigrationNeeded()
-          .build();
-    }
-    return mRealmConfiguration;
-  }
-
   private void sendTopStoriesRequest(String url) {
+    JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET
+        , url
+        , null
+        , new Response.Listener<JSONArray>() {
+      @Override
+      public void onResponse(JSONArray response) {
+        for (int i = 0; i < response.length(); i++) {
+          try {
 
-    JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET,
-        url,
-        null,
-        new Response.Listener<JSONArray>() {
-          @Override
-          public void onResponse(JSONArray response) {
-            for (int i = 0; i < response.length(); i++) {
-              try {
+            long storyId = response.getLong(i);
+            String url = URLs.GET_STORY + storyId + URLs.PRINT_PRETTY;
+            HackerStory hackerStory1 = mRealm.where(HackerStory.class)
+                .equalTo("mId", storyId)
+                .findFirst();
 
-                long storyId = response.getLong(i);
-                String url = URLs.GET_STORY + storyId + URLs.PRINT_PRETTY;
-                HackerStory hackerStory1 = mRealm.where(HackerStory.class)
-                    .equalTo("mId", storyId)
-                    .findFirst();
-
-                if (hackerStory1 == null) {
-                  sendRetrieveStoryDetailsRequest(url);
-                }
-
-              } catch (JSONException e) {
-                e.printStackTrace();
-              }
+            if (hackerStory1 == null) {
+              sendRetrieveStoryDetailsRequest(url);
             }
+
+          } catch (JSONException e) {
+            e.printStackTrace();
           }
-        }, new Response.ErrorListener() {
+        }
+      }
+    }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
       }
@@ -122,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
   }
 
   private void sendRetrieveStoryDetailsRequest(String url) {
-
     JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET
         , url
         , null
@@ -154,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
 
   @Override
   public void itemClicked(HackerStory story) {
-
     Intent intent = new Intent(MainActivity.this, DetailActivity.class);
     intent.putExtra("storyId", story.getId());
     startActivity(intent);

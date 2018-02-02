@@ -31,7 +31,6 @@ public class DetailActivity extends AppCompatActivity {
 
   private long mStoryId;
 
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
