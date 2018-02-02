@@ -14,7 +14,6 @@ import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,8 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.co.nikhil.hackernewsfirebaseapp.R;
 
-public class LoginActivity extends AppCompatActivity {
-  private static final String TAG = "LoginActivity";
+public class StoryActivity extends AppCompatActivity {
+  private static final String TAG = "StoryActivity";
 
   private static final int RC_SIGN_IN = 1;
 
@@ -79,14 +78,14 @@ public class LoginActivity extends AppCompatActivity {
 //      public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
 //        FirebaseUser user = firebaseAuth.getCurrentUser();
 //        if (user != null) {
-//          Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+//          Intent mainIntent = new Intent(StoryActivity.this, MainActivity.class);
 //          mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 //          startActivity(mainIntent);
 //        }
 //      }
 //    };
 
-    Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+    Intent mainIntent = new Intent(StoryActivity.this, MainActivity.class);
     mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     startActivity(mainIntent);
 
@@ -171,9 +170,9 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                   throw task.getException();
                 } catch (FirebaseAuthInvalidCredentialsException e) {
-                  Toast.makeText(LoginActivity.this, getString(R.string.invalid_user), Toast.LENGTH_SHORT).show();
+                  Toast.makeText(StoryActivity.this, getString(R.string.invalid_user), Toast.LENGTH_SHORT).show();
                 } catch (FirebaseAuthInvalidUserException e) {
-                  Toast.makeText(LoginActivity.this, getString(R.string.please_sign_up), Toast.LENGTH_SHORT).show();
+                  Toast.makeText(StoryActivity.this, getString(R.string.please_sign_up), Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                   e.printStackTrace();
                 }
@@ -186,7 +185,7 @@ public class LoginActivity extends AppCompatActivity {
 
   // Onclick method for Sign Up button
   public void signUp(View view) {
-    Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+    Intent intent = new Intent(StoryActivity.this, SignUpActivity.class);
     startActivity(intent);
   }
 

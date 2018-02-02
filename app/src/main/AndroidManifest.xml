@@ -3,15 +3,15 @@
   package="in.co.nikhil.hackernewsfirebaseapp">
 
   <application
+    android:name=".MyApplication"
     android:allowBackup="true"
     android:icon="@mipmap/ic_launcher"
     android:label="@string/app_name"
     android:roundIcon="@mipmap/ic_launcher_round"
-    android:name=".MyApplication"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
     <activity
-      android:name=".activity.LoginActivity"
+      android:name=".activity.StoryActivity"
       android:label="@string/app_name"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.NoActionBar">
@@ -26,7 +26,17 @@
       android:label="@string/title_activity_main2"
       android:screenOrientation="portrait"
       android:theme="@style/AppTheme.NoActionBar" />
-    <activity android:name=".activity.MainActivity"></activity>
+    <activity android:name=".activity.MainActivity" />
+
+    <activity
+      android:name=".activity.DetailActivity"
+      android:parentActivityName=".activity.MainActivity"
+      android:screenOrientation="portrait"
+      android:theme="@style/AppTheme.NoActionBar">
+      <meta-data
+        android:name="android.support.PARENT_ACTIVITY"
+        android:value=".activity.MainActivity" />
+    </activity>
   </application>
 
 </manifest>

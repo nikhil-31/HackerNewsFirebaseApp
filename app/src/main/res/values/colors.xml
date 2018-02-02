@@ -12,4 +12,5 @@
   <color name="web_safe_red">#1565c0</color>
   <color name="black">#000000</color>
   <color name="light_gray">#E0E0E0</color>
+  <color name="background">#E0E0E0</color>
 </resources>

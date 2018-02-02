@@ -1,5 +1,6 @@
 package in.co.nikhil.hackernewsfirebaseapp.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
@@ -153,6 +154,10 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
 
   @Override
   public void itemClicked(HackerStory story) {
+
+    Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+    intent.putExtra("storyId", story.getId());
+    startActivity(intent);
     Toast.makeText(this, "Story id " + story.getId(), Toast.LENGTH_SHORT).show();
   }
 }
