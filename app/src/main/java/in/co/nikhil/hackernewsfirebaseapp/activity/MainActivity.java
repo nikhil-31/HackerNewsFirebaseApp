@@ -144,6 +144,5 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
     Intent intent = new Intent(MainActivity.this, DetailActivity.class);
     intent.putExtra("storyId", story.getId());
     startActivity(intent);
-    Toast.makeText(this, "Story id " + story.getId(), Toast.LENGTH_SHORT).show();
   }
 }

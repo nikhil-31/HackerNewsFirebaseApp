@@ -3,6 +3,7 @@ package in.co.nikhil.hackernewsfirebaseapp.di.component;
 import javax.inject.Singleton;
 
 import dagger.Component;
+import in.co.nikhil.hackernewsfirebaseapp.activity.DetailActivity;
 import in.co.nikhil.hackernewsfirebaseapp.activity.MainActivity;
 import in.co.nikhil.hackernewsfirebaseapp.di.module.ApplicationModule;
 
@@ -14,6 +15,8 @@ import in.co.nikhil.hackernewsfirebaseapp.di.module.ApplicationModule;
 public interface ApplicationComponent {
 
   void inject(MainActivity target);
+
+  void inject(DetailActivity target);
 
 
 
