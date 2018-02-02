@@ -3,8 +3,10 @@ package in.co.nikhil.hackernewsfirebaseapp;
 import android.app.Application;
 
 import in.co.nikhil.hackernewsfirebaseapp.di.component.ApplicationComponent;
+
 import in.co.nikhil.hackernewsfirebaseapp.di.component.DaggerApplicationComponent;
 import in.co.nikhil.hackernewsfirebaseapp.di.module.ApplicationModule;
+import io.realm.Realm;
 
 /**
  * Created by nik on 2/2/2018.
@@ -13,6 +15,7 @@ import in.co.nikhil.hackernewsfirebaseapp.di.module.ApplicationModule;
 public class MyApplication extends Application {
 
   private ApplicationComponent component;
+
   @Override
   public void onCreate() {
     super.onCreate();
@@ -22,6 +25,8 @@ public class MyApplication extends Application {
         .applicationModule(new ApplicationModule(this))
         .build();
 
+    // Init Realm
+    Realm.init(this);
   }
 
   public ApplicationComponent getComponent() {

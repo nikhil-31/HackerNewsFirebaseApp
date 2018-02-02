@@ -11,6 +11,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,7 +22,12 @@ import javax.inject.Inject;
 
 import in.co.nikhil.hackernewsfirebaseapp.MyApplication;
 import in.co.nikhil.hackernewsfirebaseapp.R;
+import in.co.nikhil.hackernewsfirebaseapp.data.HackerStory;
+import in.co.nikhil.hackernewsfirebaseapp.data.remoteModel.Story;
 import in.co.nikhil.hackernewsfirebaseapp.ultis.URLs;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
   private static final String TAG = "MainActivity";
@@ -28,15 +35,46 @@ public class MainActivity extends AppCompatActivity {
   @Inject
   RequestQueue mRequestQueue;
 
+  private Gson mGson;
+
+  Realm mRealm;
+  RealmConfiguration mRealmConfiguration;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
+    // Dagger
     ((MyApplication) getApplication()).getComponent().inject(this);
+
+    mRealm = Realm.getInstance(getRealmConfiguration());
+    RealmResults<HackerStory> hackerStories = mRealm
+        .where(HackerStory.class)
+        .findAll();
+
+
+
+
+
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    gsonBuilder.setDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+    mGson = gsonBuilder.create();
 
     sendTopStoriesRequest(URLs.TOP_STORIES);
   }
+
+  public RealmConfiguration getRealmConfiguration(){
+    if (mRealmConfiguration == null){
+      mRealmConfiguration = new RealmConfiguration
+          .Builder()
+          .deleteRealmIfMigrationNeeded()
+          .build();
+    }
+    return mRealmConfiguration;
+  }
+
+
 
   private void sendTopStoriesRequest(String url) {
 
@@ -65,10 +103,7 @@ public class MainActivity extends AppCompatActivity {
       }
     });
     mRequestQueue.add(request);
-
   }
-
-
 
   private void sendRetrieveStoryDetailsRequest(String url) {
 
@@ -80,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
       public void onResponse(JSONObject response) {
         Log.v(TAG, "Response" + response.toString());
         Toast.makeText(MainActivity.this, "Response " + response.toString(), Toast.LENGTH_SHORT).show();
+
+        Story story = mGson.fromJson(response.toString(), Story.class);
+
+
       }
     }, new Response.ErrorListener() {
       @Override
