@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -50,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
 
   @BindView(R.id.story_recycler_view)
   RealmRecyclerView mRealmRecyclerView;
+  @BindView(R.id.toolbar)
+  Toolbar mToolbar;
 
   @Inject
   Realm mRealm;
@@ -69,7 +73,9 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
     // Firebase init
     mFirebaseAuth = FirebaseAuth.getInstance();
 
-    if (getSupportActionBar() != null){
+    setSupportActionBar(mToolbar);
+
+    if (getSupportActionBar() != null) {
       getSupportActionBar().setTitle(R.string.top_stories);
     }
 
@@ -116,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
         , new Response.Listener<JSONArray>() {
       @Override
       public void onResponse(JSONArray response) {
+        mRealmRecyclerView.setRefreshing(false);
         for (int i = 0; i < response.length(); i++) {
           try {
 
@@ -137,6 +144,7 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
     }, new Response.ErrorListener() {
       @Override
       public void onErrorResponse(VolleyError error) {
+        mRealmRecyclerView.setRefreshing(false);
       }
     });
     mRequestQueue.add(request);
