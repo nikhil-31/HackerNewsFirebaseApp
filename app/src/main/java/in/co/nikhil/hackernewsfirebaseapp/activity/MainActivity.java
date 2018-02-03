@@ -69,6 +69,10 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
     // Firebase init
     mFirebaseAuth = FirebaseAuth.getInstance();
 
+    if (getSupportActionBar() != null){
+      getSupportActionBar().setTitle(R.string.top_stories);
+    }
+
     // Dagger
     ((MyApplication) getApplication()).getComponent().inject(this);
 

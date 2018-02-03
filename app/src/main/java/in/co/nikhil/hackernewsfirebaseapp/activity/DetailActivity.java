@@ -43,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
 
   private long mStoryId;
   private boolean mUser = false;
+  private String mCommentsNumber;
 
   @Inject
   Realm mRealm;
@@ -66,6 +67,7 @@ public class DetailActivity extends AppCompatActivity {
     if (hackerStory != null) {
       mTitle.setText(hackerStory.getArticleTitle());
       mUrl.setText(hackerStory.getUrl());
+      mCommentsNumber = hackerStory.getComments();
 
       long timeMillis = System.currentTimeMillis() / 1000 - Long.parseLong(hackerStory.getDatetime());
 
@@ -82,7 +84,7 @@ public class DetailActivity extends AppCompatActivity {
         mTimeUser.setText(time);
       }
 
-      if (hackerStory.getUrl().equals("")){
+      if (hackerStory.getUrl().equals("")) {
         mUser = true;
       }
     } else {
@@ -139,7 +141,16 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public CharSequence getPageTitle(int position) {
-      return getResources().getStringArray(R.array.tabs)[position];
+      String title = "";
+      switch (position) {
+        case COMMENTS:
+          title = "COMMENTS - " +mCommentsNumber ;
+          break;
+        case ARTICLE_WEB_VIEW:
+          title = "ARTICLE";
+          break;
+      }
+      return title;
     }
 
     @Override
@@ -166,7 +177,13 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     public CharSequence getPageTitle(int position) {
-      return getResources().getStringArray(R.array.tabs)[position];
+      String title = "";
+      switch (position) {
+        case COMMENTS:
+          title = "COMMENTS - " +mCommentsNumber ;
+          break;
+      }
+      return title;
     }
 
     @Override

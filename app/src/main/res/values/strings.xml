@@ -28,4 +28,5 @@
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="error_not_found">Error, Id Not Found</string>
   <string name="logout">LOGOUT</string>
+  <string name="top_stories">Top Stories</string>
 </resources>

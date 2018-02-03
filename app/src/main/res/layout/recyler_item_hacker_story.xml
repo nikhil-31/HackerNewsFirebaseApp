@@ -20,7 +20,6 @@
       android:layout_height="match_parent"
       android:background="@color/light_orange"
       android:gravity="center"
-      android:text="1"
       android:textColor="@color/white"
       android:textSize="25sp" />
 
@@ -40,7 +39,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:maxLines="2"
-        android:text="Introduction  To Html Components"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textColor="@color/black"
         android:textSize="18sp" />
@@ -50,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:text="www.w2c.org"
+
         android:textSize="14sp" />
 
       <TextView
@@ -58,7 +56,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
-        android:text="12 mins ago . user01"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="14sp" />
 
@@ -74,7 +71,6 @@
         android:layout_height="60dp"
         android:layout_centerInParent="true"
         android:drawableTop="@drawable/ic_action_chat_bubble"
-        android:text="50"
         android:textAlignment="center"
         android:textColor="@color/black" />
 
