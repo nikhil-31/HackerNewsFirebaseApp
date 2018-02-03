@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.co.nikhil.hackernewsfirebaseapp.MyApplication;
 import in.co.nikhil.hackernewsfirebaseapp.R;
-import in.co.nikhil.hackernewsfirebaseapp.data.HackerStory;
+import in.co.nikhil.hackernewsfirebaseapp.data.realm.HackerStory;
 import io.realm.Realm;
 
 /**
@@ -81,6 +81,8 @@ public class ArticleWebFragment extends Fragment {
     }
     return rootView;
   }
+
+
 
   private class CustomWebViewClient extends WebViewClient {
     @Override

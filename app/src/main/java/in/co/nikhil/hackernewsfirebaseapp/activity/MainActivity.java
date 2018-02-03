@@ -1,15 +1,11 @@
 package in.co.nikhil.hackernewsfirebaseapp.activity;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,7 +17,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,11 +32,10 @@ import co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView;
 import in.co.nikhil.hackernewsfirebaseapp.MyApplication;
 import in.co.nikhil.hackernewsfirebaseapp.R;
 import in.co.nikhil.hackernewsfirebaseapp.adapter.StoryRealmAdapter;
-import in.co.nikhil.hackernewsfirebaseapp.data.HackerStory;
+import in.co.nikhil.hackernewsfirebaseapp.data.realm.HackerStory;
 import in.co.nikhil.hackernewsfirebaseapp.data.remoteModel.Story;
 import in.co.nikhil.hackernewsfirebaseapp.ultis.URLs;
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements StoryRealmAdapter.itemClick {

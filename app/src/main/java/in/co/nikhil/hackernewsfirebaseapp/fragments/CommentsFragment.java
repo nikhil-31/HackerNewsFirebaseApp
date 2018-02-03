@@ -2,19 +2,42 @@ package in.co.nikhil.hackernewsfirebaseapp.fragments;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import in.co.nikhil.hackernewsfirebaseapp.MyApplication;
 import in.co.nikhil.hackernewsfirebaseapp.R;
-import in.co.nikhil.hackernewsfirebaseapp.data.HackerStory;
+import in.co.nikhil.hackernewsfirebaseapp.adapter.CommentsAdapter;
+import in.co.nikhil.hackernewsfirebaseapp.data.pojo.CommentsPojo;
+import in.co.nikhil.hackernewsfirebaseapp.data.realm.HackerStory;
+import in.co.nikhil.hackernewsfirebaseapp.data.remoteModel.Comment;
+import in.co.nikhil.hackernewsfirebaseapp.ultis.URLs;
 import io.realm.Realm;
 
 /**
@@ -27,8 +50,16 @@ public class CommentsFragment extends Fragment {
 
   @Inject
   Realm mRealm;
+  @Inject
+  RequestQueue mRequestQueue;
 
   private long mStoryId;
+  private Gson mGson;
+  CommentsAdapter mCommentsAdapter;
+
+  @BindView(R.id.comments_recycler_view)
+  RecyclerView mRecyclerView;
+  ArrayList<CommentsPojo> mCommentsArrayList = new ArrayList<>();
 
   public CommentsFragment() {
     // Required empty public constructor
@@ -52,30 +83,74 @@ public class CommentsFragment extends Fragment {
   }
 
   @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     View rootView = inflater.inflate(R.layout.fragment_comments, container, false);
+    ButterKnife.bind(this, rootView);
 
     Bundle bundle = getActivity().getIntent().getExtras();
     if (bundle != null) {
       mStoryId = bundle.getLong("storyId");
     }
 
+    // GSON Init
+    GsonBuilder gsonBuilder = new GsonBuilder();
+    mGson = gsonBuilder.create();
+
+    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+    mRecyclerView.setLayoutManager(linearLayoutManager);
+
+    mCommentsAdapter = new CommentsAdapter(getActivity());
+    mRecyclerView.setAdapter(mCommentsAdapter);
+
     HackerStory hackerStory = mRealm.where(HackerStory.class)
         .equalTo("mId", mStoryId)
         .findFirst();
     if (hackerStory != null) {
+      mCommentsArrayList.clear();
+      String commentsArray = hackerStory.getCommentsJson();
 
-      Toast.makeText(getActivity(), "Comments JSON " + hackerStory.getCommentsJson(), Toast.LENGTH_SHORT).show();
+      try {
+        JSONArray array = new JSONArray(commentsArray);
+        for (int i = 0; i < array.length(); i++) {
+          String url = URLs.GET_STORY + array.getString(i) + URLs.PRINT_PRETTY;
+          sendRetrieveCommentsRequest(url);
+        }
 
-
+      } catch (JSONException e) {
+        e.printStackTrace();
+      }
     }
     return rootView;
-
   }
 
 
+  private void sendRetrieveCommentsRequest(String url) {
 
+    JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET
+        , url
+        , null
+        , new Response.Listener<JSONObject>() {
+      @Override
+      public void onResponse(JSONObject response) {
+        Comment comment = mGson.fromJson(response.toString(), Comment.class);
+
+        CommentsPojo commentsPojo = new CommentsPojo();
+        commentsPojo.setAuthor(comment.getBy());
+        commentsPojo.setComment(comment.getText());
+        commentsPojo.setDateTime(comment.getTime());
+
+        mCommentsArrayList.add(commentsPojo);
+        mCommentsAdapter.setArrayList(mCommentsArrayList);
+      }
+    }, new Response.ErrorListener() {
+      @Override
+      public void onErrorResponse(VolleyError error) {
+      }
+    });
+    mRequestQueue.add(request);
+
+  }
 
 }

@@ -8,7 +8,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.co.nikhil.hackernewsfirebaseapp.R;
-import in.co.nikhil.hackernewsfirebaseapp.data.HackerStory;
+import in.co.nikhil.hackernewsfirebaseapp.data.realm.HackerStory;
 import io.realm.RealmBasedRecyclerViewAdapter;
 import io.realm.RealmResults;
 import io.realm.RealmViewHolder;

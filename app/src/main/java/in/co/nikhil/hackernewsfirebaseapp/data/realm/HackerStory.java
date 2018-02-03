@@ -1,4 +1,4 @@
-package in.co.nikhil.hackernewsfirebaseapp.data;
+package in.co.nikhil.hackernewsfirebaseapp.data.realm;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;

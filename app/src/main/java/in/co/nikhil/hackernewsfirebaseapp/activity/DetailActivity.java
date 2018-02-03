@@ -18,7 +18,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import in.co.nikhil.hackernewsfirebaseapp.MyApplication;
 import in.co.nikhil.hackernewsfirebaseapp.R;
-import in.co.nikhil.hackernewsfirebaseapp.data.HackerStory;
+import in.co.nikhil.hackernewsfirebaseapp.data.realm.HackerStory;
 import in.co.nikhil.hackernewsfirebaseapp.fragments.ArticleWebFragment;
 import in.co.nikhil.hackernewsfirebaseapp.fragments.CommentsFragment;
 import io.realm.Realm;
