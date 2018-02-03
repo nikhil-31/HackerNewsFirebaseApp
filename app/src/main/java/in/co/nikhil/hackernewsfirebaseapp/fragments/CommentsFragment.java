@@ -121,6 +121,7 @@ public class CommentsFragment extends Fragment {
       } catch (JSONException e) {
         e.printStackTrace();
       }
+
     }
     return rootView;
   }
@@ -148,7 +149,12 @@ public class CommentsFragment extends Fragment {
       @Override
       public void onErrorResponse(VolleyError error) {
       }
-    });
+    }) {
+      @Override
+      public Priority getPriority() {
+        return Priority.IMMEDIATE;
+      }
+    };
     mRequestQueue.add(request);
 
   }
