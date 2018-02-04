@@ -84,7 +84,8 @@ public class DetailActivity extends AppCompatActivity {
         mTimeUser.setText(time);
       }
 
-      if (hackerStory.getUrl().equals("")) {
+      String url = hackerStory.getUrl();
+      if (url == null || hackerStory.getUrl().equals("")) {
         mUser = true;
       }
     } else {
@@ -144,7 +145,7 @@ public class DetailActivity extends AppCompatActivity {
       String title = "";
       switch (position) {
         case COMMENTS:
-          title = "COMMENTS - " +mCommentsNumber ;
+          title = "COMMENTS - " + mCommentsNumber;
           break;
         case ARTICLE_WEB_VIEW:
           title = "ARTICLE";
@@ -180,7 +181,7 @@ public class DetailActivity extends AppCompatActivity {
       String title = "";
       switch (position) {
         case COMMENTS:
-          title = "COMMENTS - " +mCommentsNumber ;
+          title = "COMMENTS - " + mCommentsNumber;
           break;
       }
       return title;
