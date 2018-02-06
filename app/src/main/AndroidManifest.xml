@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="in.co.nikhil.hackernewsfirebaseapp">
 
-
-
   <application
     android:name=".MyApplication"
     android:allowBackup="true"
