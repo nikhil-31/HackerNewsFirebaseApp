@@ -169,26 +169,31 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
         , new Response.Listener<JSONObject>() {
       @Override
       public void onResponse(JSONObject response) {
-        Story story = mGson.fromJson(response.toString(), Story.class);
+        final Story story = mGson.fromJson(response.toString(), Story.class);
         String kidsString = "";
         try {
           kidsString = response.getString("kids");
         } catch (JSONException e) {
           e.printStackTrace();
         }
+        final String finalKidsString = kidsString;
+        mRealm.executeTransactionAsync(new Realm.Transaction() {
+          @Override
+          public void execute(Realm realm) {
+            HackerStory hackerStory = realm.createObject(HackerStory.class, story.getId());
+            hackerStory.setArticleTitle(story.getTitle());
+            hackerStory.setScore(story.getScore().toString());
+            hackerStory.setUrl(story.getUrl());
+            hackerStory.setDatetime(story.getTime().toString());
+            hackerStory.setSubmitter(story.getBy());
+            hackerStory.setCommentsJson(finalKidsString);
+            List<Integer> kids = story.getKids();
+            String commentsSize = String.valueOf(kids.size());
+            hackerStory.setComments(commentsSize);
+            realm.copyToRealmOrUpdate(hackerStory);
+          }
+        });
 
-        mRealm.beginTransaction();
-        HackerStory hackerStory = mRealm.createObject(HackerStory.class, story.getId());
-        hackerStory.setArticleTitle(story.getTitle());
-        hackerStory.setScore(story.getScore().toString());
-        hackerStory.setUrl(story.getUrl());
-        hackerStory.setDatetime(story.getTime().toString());
-        hackerStory.setSubmitter(story.getBy());
-        hackerStory.setCommentsJson(kidsString);
-        List<Integer> kids = story.getKids();
-        String commentsSize = String.valueOf(kids.size());
-        hackerStory.setComments(commentsSize);
-        mRealm.commitTransaction();
       }
     }, new Response.ErrorListener() {
       @Override
