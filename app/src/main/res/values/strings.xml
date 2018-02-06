@@ -30,4 +30,5 @@
   <string name="logout">LOGOUT</string>
   <string name="top_stories">Top Stories</string>
   <string name="title_activity_main">MainActivity</string>
+  <string name="no_internet_please_connect">No Internet Connection, Please Connect to the internet</string>
 </resources>

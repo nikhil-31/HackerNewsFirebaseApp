@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
   package="in.co.nikhil.hackernewsfirebaseapp">
 
+
+
   <application
     android:name=".MyApplication"
     android:allowBackup="true"
@@ -10,6 +12,11 @@
     android:roundIcon="@mipmap/ic_launcher_round"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
+
+    <meta-data
+      android:name="com.google.android.gms.version"
+      android:value="@integer/google_play_services_version" />
+
     <activity
       android:name=".activity.LoginActivity"
       android:label="@string/app_name"
@@ -28,8 +35,8 @@
       android:theme="@style/AppTheme.NoActionBar" />
     <activity
       android:name=".activity.MainActivity"
-      android:screenOrientation="portrait"
       android:label="@string/title_activity_main"
+      android:screenOrientation="portrait"
       android:theme="@style/AppTheme.NoActionBar" />
 
     <activity
@@ -55,10 +62,11 @@
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
       </intent-filter>
     </service>
-      <meta-data
-            android:name="io.fabric.ApiKey"
-            android:value="716de6caed709cd5d2cded23c88864657c5f4187" />
-    </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <meta-data
+      android:name="io.fabric.ApiKey"
+      android:value="716de6caed709cd5d2cded23c88864657c5f4187" />
+  </application>
+
+  <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

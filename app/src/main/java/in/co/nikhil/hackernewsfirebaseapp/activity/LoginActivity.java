@@ -1,7 +1,10 @@
 package in.co.nikhil.hackernewsfirebaseapp.activity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
@@ -86,7 +89,6 @@ public class LoginActivity extends AppCompatActivity {
       }
     };
 
-
     mGoogleSignInButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
@@ -100,13 +102,17 @@ public class LoginActivity extends AppCompatActivity {
         .build();
 
     mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
   }
 
   // Starts the google Sign In
   private void googleSignIn() {
-    Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-    startActivityForResult(signInIntent, RC_SIGN_IN);
+    if (checkInternet()) {
+      Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+      startActivityForResult(signInIntent, RC_SIGN_IN);
+    } else {
+      Toast.makeText(this, R.string.no_internet_please_connect, Toast.LENGTH_SHORT).show();
+    }
+
   }
 
   @Override
@@ -123,13 +129,22 @@ public class LoginActivity extends AppCompatActivity {
         firebaseAuthWithGoogle(account);
       } catch (ApiException e) {
         // Google Sign In failed, update UI appropriately
-        Log.w(TAG, "Google sign in failed", e);
+        Log.w(TAG, "Google sign in failed " + e.getMessage() + " " + e.getStatusCode());
         // [START_EXCLUDE]
         Toast.makeText(this, "Google Sign In failed, Please Try Again", Toast.LENGTH_SHORT).show();
         // [END_EXCLUDE]
         mProgress.dismiss();
       }
     }
+  }
+
+  private boolean checkInternet() {
+    ConnectivityManager conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    NetworkInfo netInfo = null;
+    if (conMgr != null) {
+      netInfo = conMgr.getActiveNetworkInfo();
+    }
+    return netInfo != null;
   }
 
   private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
@@ -155,29 +170,33 @@ public class LoginActivity extends AppCompatActivity {
     String password = mLoginPassword.getText().toString().trim();
 
     if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
-      mProgress.setTitle("Logging you in..");
-      mProgress.show();
+      if (checkInternet()) {
+        mProgress.setTitle("Logging you in..");
+        mProgress.show();
 
-      mFirebaseAuth.signInWithEmailAndPassword(email, password)
-          .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-              if (task.isSuccessful()) {
-                mProgress.dismiss();
-              } else if (!task.isSuccessful()) {
-                try {
-                  throw task.getException();
-                } catch (FirebaseAuthInvalidCredentialsException e) {
-                  Toast.makeText(LoginActivity.this, getString(R.string.invalid_user), Toast.LENGTH_SHORT).show();
-                } catch (FirebaseAuthInvalidUserException e) {
-                  Toast.makeText(LoginActivity.this, getString(R.string.please_sign_up), Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                  e.printStackTrace();
+        mFirebaseAuth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+              @Override
+              public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                  mProgress.dismiss();
+                } else if (!task.isSuccessful()) {
+                  try {
+                    throw task.getException();
+                  } catch (FirebaseAuthInvalidCredentialsException e) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.invalid_user), Toast.LENGTH_SHORT).show();
+                  } catch (FirebaseAuthInvalidUserException e) {
+                    Toast.makeText(LoginActivity.this, getString(R.string.please_sign_up), Toast.LENGTH_SHORT).show();
+                  } catch (Exception e) {
+                    e.printStackTrace();
+                  }
+                  mProgress.dismiss();
                 }
-                mProgress.dismiss();
               }
-            }
-          });
+            });
+      } else {
+        Toast.makeText(this, R.string.no_internet_please_connect, Toast.LENGTH_SHORT).show();
+      }
     }
   }
 
