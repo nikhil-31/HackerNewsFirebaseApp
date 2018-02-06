@@ -24,6 +24,7 @@
     android:layout_height="match_parent"
     android:layout_marginTop="?attr/actionBarSize"
     app:rrvEmptyLayoutId="@layout/rrv_empty_view"
+    app:rrvIsRefreshable="true"
     app:rrvLayoutType="LinearLayout"
     app:rrvSwipeToDelete="false" />
 

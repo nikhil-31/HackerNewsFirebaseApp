@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 
 import com.android.volley.Request;
@@ -111,7 +112,12 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
         , true);
     storyRealmAdapter.setItemClick(this);
     mRealmRecyclerView.setAdapter(storyRealmAdapter);
-
+    mRealmRecyclerView.setOnRefreshListener(new RealmRecyclerView.OnRefreshListener() {
+      @Override
+      public void onRefresh() {
+        sendTopStoriesRequest(URLs.TOP_STORIES);
+      }
+    });
     sendTopStoriesRequest(URLs.TOP_STORIES);
   }
 
