@@ -2,10 +2,12 @@ package in.co.nikhil.hackernewsfirebaseapp;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
 import in.co.nikhil.hackernewsfirebaseapp.di.component.ApplicationComponent;
 
 import in.co.nikhil.hackernewsfirebaseapp.di.component.DaggerApplicationComponent;
 import in.co.nikhil.hackernewsfirebaseapp.di.module.ApplicationModule;
+import io.fabric.sdk.android.Fabric;
 import io.realm.Realm;
 
 /**
@@ -19,6 +21,7 @@ public class MyApplication extends Application {
   @Override
   public void onCreate() {
     super.onCreate();
+    Fabric.with(this, new Crashlytics());
 
     component = DaggerApplicationComponent
         .builder()

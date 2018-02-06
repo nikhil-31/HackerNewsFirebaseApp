@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements StoryRealmAdapter
         mRealmRecyclerView.setRefreshing(false);
         for (int i = 0; i < response.length(); i++) {
           try {
-
             long storyId = response.getLong(i);
             String url = URLs.GET_STORY + storyId + URLs.PRINT_PRETTY;
             HackerStory hackerStory1 = mRealm.where(HackerStory.class)
